@@ -1,9 +1,18 @@
 <template>
+  <h1>{{ todoListRef.length }}</h1>
   <div id="app" data-v-app="">
     <section class="todoapp">
       <header class="header">
         <h1>todos</h1>
-        <input class="new-todo" autofocus="" autocomplete="off" placeholder="What needs to be done?" />
+        <input 
+          class="new-todo" 
+          autofocus="" 
+          autocomplete="off" 
+          placeholder="What needs to be done?"
+          v-model="newTodoRef"
+          @keyup.enter="addTodo"
+         />
+         <!-- 在键盘弹起的时候触发 -->
       </header>
       <section class="main">
         <input id="toggle-all" class="toggle-all" type="checkbox" />
@@ -54,8 +63,17 @@
 </template>
 
 <script>
-
+import useTodoList from "./composition/useTodoList.js"
+import useNewTodo from "./composition/useNewTodo.js"
 export default {
-  name: 'App'
+  name: 'App',
+  setup() {
+    const { todoListRef } = useTodoList();
+
+    return {
+      todoListRef,
+      ...useNewTodo(todoListRef),
+    }
+  }
 }
 </script>
