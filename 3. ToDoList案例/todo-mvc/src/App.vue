@@ -8,19 +8,42 @@
         <!-- 在键盘弹起的时候触发 -->
       </header>
       <section class="main">
-        <input id="toggle-all" class="toggle-all" type="checkbox" />
+        <!-- 
+          v-model="allCompletedRef"
+          等价于
+          :checked="allCompletedRef"
+          @change="setAllCompletedRef($event.target.checked)"
+          -->
+        <input 
+          id="toggle-all" 
+          class="toggle-all" 
+          type="checkbox"
+          :checked="allCompletedRef"
+          @change="setAllCompletedRef($event.target.checked)"
+        />
         <label for="toggle-all">Mark all as complete</label>
         <ul class="todo-list">
-          <li class="todo" :class="{completed: todo.completed}" v-for="todo in filteredTodosRef" :key="todo.id">
+          <li 
+            class="todo" 
+            :class="{completed: todo.completed, editing: todo === editingTodoRef}" 
+            v-for="todo in filteredTodosRef" :key="todo.id"
+            @dblclick="handleTodoEdit(todo)"
+          >
             <div class="view">
               <!-- 左边check状态相当于是它一个透明的checkbox盖在这上面的，它这里看实际上是一个背景图，就是label的背景图 -->
               <input class="toggle" type="checkbox" v-model="todo.completed" />
               <label>{{ todo.title }}</label>
               <button class="destroy"></button>
             </div>
-            <input class="edit" type="text" />
+            <input 
+              v-model="todo.title" 
+              class="edit" 
+              type="text" 
+              @blur="doneEdit"
+              @keyup.enter="doneEdit"
+              @keyup.escape="cancelEdit(todo)"
+            />
           </li>
-
         </ul>
       </section>
       <footer class="footer">
@@ -47,6 +70,7 @@
 import useTodoList from "./composition/useTodoList.js"
 import useNewTodo from "./composition/useNewTodo.js"
 import useFilter from "./composition/useFilter.js"
+import useEdit from "./composition/useEdit.js"
 
 export default {
   name: 'App',
@@ -57,6 +81,7 @@ export default {
       todoListRef,
       ...useNewTodo(todoListRef),
       ...useFilter(todoListRef),
+      ...useEdit(todoListRef),
     }
   }
 }
