@@ -33,7 +33,7 @@
               <!-- 左边check状态相当于是它一个透明的checkbox盖在这上面的，它这里看实际上是一个背景图，就是label的背景图 -->
               <input class="toggle" type="checkbox" v-model="todo.completed" />
               <label>{{ todo.title }}</label>
-              <button class="destroy"></button>
+              <button class="destroy" @click="handleTodoDelete(todo)"></button>
             </div>
             <input 
               v-model="todo.title" 
@@ -58,7 +58,7 @@
           <li><a href="#/completed" :class="{ selected: visibilityType === 'completed' }">Completed</a></li>
         </ul>
         <!-- <button class="clear-completed" style="display: none"> -->
-        <button class="clear-completed" v-show="completedNumRef > 0">
+        <button class="clear-completed" v-show="completedNumRef > 0" @click="handleClearCompleted">
           Clear completed
         </button>
       </footer>
@@ -67,10 +67,11 @@
 </template>
 
 <script>
-import useTodoList from "./composition/useTodoList.js"
-import useNewTodo from "./composition/useNewTodo.js"
-import useFilter from "./composition/useFilter.js"
-import useEdit from "./composition/useEdit.js"
+import useTodoList from "./composition/useTodoList.js";
+import useNewTodo from "./composition/useNewTodo.js";
+import useFilter from "./composition/useFilter.js";
+import useEdit from "./composition/useEdit.js";
+import useDelete from "./composition/useDelete.js";
 
 export default {
   name: 'App',
@@ -82,6 +83,7 @@ export default {
       ...useNewTodo(todoListRef),
       ...useFilter(todoListRef),
       ...useEdit(todoListRef),
+       ...useDelete(todoListRef),
     }
   }
 }
