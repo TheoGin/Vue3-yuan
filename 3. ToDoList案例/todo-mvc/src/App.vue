@@ -7,7 +7,8 @@
           v-model="newTodoRef" @keyup.enter="addTodo" />
         <!-- 在键盘弹起的时候触发 -->
       </header>
-      <section class="main">
+      <!-- 当没了todo列表的时候，不显示 -->
+      <section class="main" v-show="todoListRef.length > 0">
         <!-- 
           v-model="allCompletedRef"
           等价于
@@ -39,14 +40,15 @@
               v-model="todo.title" 
               class="edit" 
               type="text" 
-              @blur="doneEdit"
-              @keyup.enter="doneEdit"
+              @blur="doneEdit(todo)"
+              @keyup.enter="doneEdit(todo)"
               @keyup.escape="cancelEdit(todo)"
             />
           </li>
         </ul>
       </section>
-      <footer class="footer">
+      <!-- 当没了todo列表的时候，不显示 -->
+      <footer class="footer" v-show="todoListRef.length > 0">
         <span class="todo-count">
           <strong>{{ remainingNumRef }}</strong>
           <!-- 剩余个数为 1 的时候，item为单数，否则为复数items -->
@@ -69,9 +71,9 @@
 <script>
 import useTodoList from "./composition/useTodoList.js";
 import useNewTodo from "./composition/useNewTodo.js";
-import useFilter from "./composition/useFilter.js";
-import useEdit from "./composition/useEdit.js";
-import useDelete from "./composition/useDelete.js";
+import useFilter from "./composition/useFilterTodo.js";
+import useEditTodo from "./composition/useEditTodo.js";
+import useDeleteTodo from "./composition/useDeleteTodo.js";
 
 export default {
   name: 'App',
@@ -82,8 +84,8 @@ export default {
       todoListRef,
       ...useNewTodo(todoListRef),
       ...useFilter(todoListRef),
-      ...useEdit(todoListRef),
-       ...useDelete(todoListRef),
+      ...useEditTodo(todoListRef),
+       ...useDeleteTodo(todoListRef),
     }
   }
 }
