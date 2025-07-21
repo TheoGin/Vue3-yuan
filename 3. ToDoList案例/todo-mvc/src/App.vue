@@ -7,7 +7,7 @@
           v-model="newTodoRef" @keyup.enter="addTodo" />
         <!-- 在键盘弹起的时候触发 -->
       </header>
-      <!-- 当没了todo列表的时候，不显示 -->
+      <!-- 当没了 -->
       <section class="main" v-show="todoListRef.length > 0">
         <!-- 
           v-model="allCompletedRef"
@@ -47,7 +47,7 @@
           </li>
         </ul>
       </section>
-      <!-- 当没了todo列表的时候，不显示 -->
+      <!-- 当没了 -->
       <footer class="footer" v-show="todoListRef.length > 0">
         <span class="todo-count">
           <strong>{{ remainingNumRef }}</strong>
