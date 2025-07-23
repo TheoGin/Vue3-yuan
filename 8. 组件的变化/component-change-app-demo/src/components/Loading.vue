@@ -1,10 +1,19 @@
 <template>
-  <svg viewBox="25 25 50 50" class="circular">
-    <circle cx="50" cy="50" r="20" fill="none" class="path"></circle>
-  </svg>
+  <div class="loading-container">
+    <svg viewBox="25 25 50 50" class="circular">
+      <circle cx="50" cy="50" r="20" fill="none" class="path"></circle>
+    </svg>
+  </div>
 </template>
 
 <style scoped>
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
 .circular {
   height: 42px;
   width: 42px;
