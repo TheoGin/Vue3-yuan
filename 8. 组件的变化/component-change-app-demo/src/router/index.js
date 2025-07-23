@@ -3,11 +3,11 @@
 import Router from 'vue-router';
 new Router() */
 
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import routes from './routes.js';
 
 export default createRouter({
     // model: 'history', // vue2写法
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })

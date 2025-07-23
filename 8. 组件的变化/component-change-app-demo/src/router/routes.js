@@ -18,7 +18,7 @@ export default [
     component: getAsyncPage("../views/Home.vue"),
   },
   {
-    path: "/About",
+    path: "/about",
     name: "About",
     component: getAsyncPage("../views/About.vue"),
   },

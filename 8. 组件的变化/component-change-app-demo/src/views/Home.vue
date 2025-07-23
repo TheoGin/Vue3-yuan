@@ -3,18 +3,18 @@
     <div class="block">
       <h2>区域1</h2>
       <p>
-        <button @click="openModal = true">打开朦层</button>
+        <button @click="modalVisible = true">打开朦层</button>
       </p>
-      <!-- <Modal v-if="openModal">
-        <button @click="openModal = false">关闭蒙层</button>
+      <!-- <Modal v-if="modalVisible">
+        <button @click="modalVisible = false">关闭蒙层</button>
       </Modal> -->
 
       <!-- 蒙层应该放在body元素内，放在这不合理 ——》telport元素 -->
-      <teleport to="body">
-        <Modal v-if="openModal">
-          <button @click="openModal = false">关闭蒙层</button>
+      <Teleport to="body">
+        <Modal v-if="modalVisible">
+          <button @click="modalVisible = false">关闭蒙层</button>
         </Modal>
-      </teleport>
+      </Teleport>
     </div>
     <div class="block mid">
       <h2>区域2</h2>
@@ -40,6 +40,9 @@ import { ref } from "vue";
 import { getAsyncComponent } from "../utils";
 import Modal from "../components/Modal.vue";
 // import Block5 from "./Block5.vue";
+const Block3 = getAsyncComponent("../components/Block3.vue");
+const Block5 = getAsyncComponent("../components/Block5.vue");
+
 
 export default {
   /* 
@@ -51,15 +54,17 @@ export default {
   components: {
     // Block3: defineAsyncComponent(() => import("./Block3.vue")),
     // 对象配置写法
-    Block3: getAsyncComponent("../components/Block3.vue"),
-    Block5: getAsyncComponent("../components/Block5.vue"),
+    /* Block3: getAsyncComponent("../components/Block3.vue"),
+    Block5: getAsyncComponent("../components/Block5.vue"), */
+    Block3,
+    Block5,
     Modal,
   },
   setup() {
-    const openModalRef = ref(false);
+    const modalVisibleRef = ref(false);
 
     return {
-      openModal: openModalRef,
+      modalVisible: modalVisibleRef,
     };
   },
 };

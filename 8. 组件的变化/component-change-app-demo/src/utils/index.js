@@ -1,9 +1,8 @@
-import { defineAsyncComponent } from "vue";
+import { defineAsyncComponent, h } from "vue";
 import Loading from "../components/Loading.vue";
 import ErrorComponent from "../components/Error.vue";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { h } from "vue";
 
 NProgress.configure({
   // 控制滚动条速度
@@ -43,16 +42,17 @@ export function getAsyncComponent(path) {
       await delay();
 
       if (Math.random() < 0.5) {
-        throw new Error("error");
+        throw new Error("load error");
       }
       return import(path);
     },
-    loadingComponent: Loading,
+    loadingComponent: Loading, // 当promise在pending状态时，将显示这里的组件
     // errorComponent: ErrorComponent,
     // 插槽写法
     errorComponent: {
-    //   render(h) { // vue2的h函数是在reder参数里
-      render() { // vue3的h函数是在组合式API里，创建虚拟节点在外面也可以
+      //   render(h) { // vue2的h函数是在reder参数里
+      render() {
+        // vue3的h函数是在组合式API里，创建虚拟节点在外面也可以
         return h(ErrorComponent, "组件加载出错");
       },
     },
